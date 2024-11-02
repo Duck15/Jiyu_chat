@@ -2,16 +2,14 @@
 # 极域电子教室聊天小程序
 + 基于 极域电子教室数据包(udp)重放攻击脚本
 
-[![GitHub stars](https://img.shields.io/github/stars/ht0Ruial/Jiyu_udp_attack)](https://github.com/ht0Ruial/Jiyu_udp_attack/stargazers) [![GitHub forks](https://img.shields.io/github/forks/ht0Ruial/Jiyu_udp_attack)](https://github.com/ht0Ruial/Jiyu_udp_attack/network) [![GitHub release](https://img.shields.io/github/release/ht0Ruial/Jiyu_udp_attack.svg)](https://github.com/ht0Ruial/Jiyu_udp_attack/releases/latest)
-+ 因为极域的学生端没有对接收到的udp包做(=・ω・=)身份验证，导致了我们可以构造特定的数据包让学生端来执行，从而实现命令执行攻击机房内上线的任意学生端机器。
++ 原理：因为极域的学生端没有对接收到的udp包做(=・ω・=)身份验证，导致了我们可以构造特定的数据包让学生端来执行，从而实现命令执行攻击机房内上线的任意学生端机器。
 ## 运行环境
 + Python3
 
 ## 版本说明
-v1.1
-- 功能完善
-v1.0
-- 首次fork
+No Releases.
+v20241102:
+- 添加聊天，传本体。
 
 
 
@@ -19,6 +17,7 @@ v1.0
 ## 使用方法：
 ```
 usage:
+双击执行，或者：
 
     ------------------- Github Repositories -------------------
             https://github.com/ht0Ruial/Jiyu_udp_attack
