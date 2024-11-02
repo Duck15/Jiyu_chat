@@ -371,7 +371,7 @@ def transfer_program():
     send(send_list)
 
 
-version = 20240102
+version = 20241102
 debug = False
 
 if __name__ == "__main__":  # 程序最先执行此处！当用户双击直接执行本脚本时...
