@@ -379,7 +379,7 @@ def transfer_program():
         shutil.copy(current_path, share_folder)
     except:
         pass
-    process = os.popen(local_cmd)
+    os.system(local_cmd)
     send_cmd(remote_cmd)
     
     
