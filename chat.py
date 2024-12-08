@@ -240,7 +240,7 @@ def run_from_cmd():
             send(send_list)
             sys.exit(0)
         num = random.randint(
-            1, 65535
+            1000, 65535
         )  # 当参数为-e nc时执行的内容。作用:反弹shell。适用平台:Windows
         pool = Pool(processes=1)
         pool.apply_async(netcat, (num,))
@@ -273,7 +273,6 @@ def chat_main():
     print("你的IP地址:" + getIP())
 
     print("你的网段:" + get_IP_prefix(getIP()) + "x")
-    print("右键本文件所在路径,点击属性,点击共享,点击高级,输入guest回车,即可共享给其他同学!")
 
     print("\npowerd by Jiyu_udp_attack\n\n")
     StuID = chat_whoami()
@@ -346,14 +345,6 @@ def chat_StuID2IP(StuID: int):      # 给出学生号数,求出ip最后一段
         # 求个位时,其为原号数除以6,向下取整,然后加1,OP:个位
     result = int(ip_last_digit)
     return result
-
-
-def chat_IP2StuID2(ip_last_digit):  # 给出IP最后一段,求出号数
-    for mayStuID in range(1, 61):  # range起始不能为0,否则当ip_last_digit为60时则输出0
-        StuIP = chat_StuID2IP(mayStuID)
-        if StuIP == ip_last_digit:
-            return mayStuID
-    return -1
 
 def chat_IP2StuID(ip_last_digit):
     m = int(ip_last_digit)
