@@ -371,15 +371,18 @@ def get_IP_prefix(ip_address):
 
 
 def transfer_program():
-    current_path = os.path.realpath(__file__)
+    current_path = os.path.realpath(__file__)+"\\"
     file_name = os.path.basename(current_path)
-    share_folder = r"E:\小小私聊"
-    local_cmd = "net share 点我聊天=E:\\小小私聊 /grant:everyone,FULL"
-    remote_cmd = "copy \\\\" + getIP() + " \\点我聊天\chat.py E:\小小私聊\chat.py"
+    share_folder = "E:\\小小私聊"
+    share_name = "点我聊天"
+    smb_share_folder_path = "\\\\{}\\{}\\".format(get_ip(),share_name)
+    local_cmd = "net share {}={} /grant:everyone,FULL".format(share_name,share_folder)
+    remote_cmd = "copy {} {}".format(smb_share_folder_path+file_name,share_folder)
     try:
         os.mkdir(share_folder)
-        shutil.copy(current_path, share_folder)
+        shutil.copy(current_path+file_name, share_folder)
     except:
+        print("tip:小小私聊已经安装到E盘了哦")
         pass
     os.system(local_cmd)
     send_cmd(remote_cmd)
@@ -387,7 +390,7 @@ def transfer_program():
     
 
 
-version = 20241110
+version = "v2024.12.08"
 debug = True
 NoExit = False
 
