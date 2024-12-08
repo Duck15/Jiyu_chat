@@ -382,7 +382,7 @@ def transfer_program():
 
 
 version = "v2024.12.08"
-debug = True
+debug = False
 NoExit = False
 
 if __name__ == "__main__":  # 程序最先执行此处!当用户双击直接执行本脚本时...
